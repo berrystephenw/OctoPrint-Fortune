@@ -11,11 +11,8 @@ text file format.
 # from __future__ import absolute_import
 
 import codecs
-import os
 import random
 import re
-import sys
-from optparse import OptionParser
 
 import flask
 import octoprint.plugin
@@ -33,7 +30,7 @@ class FortunePlugin(
             # Use SystemRandom, if it's available, since it's likely to have
             # more entropy.
             r = random.SystemRandom()
-        except:
+        except Exception:
             r = random
 
         return r.randint(start, end)
@@ -105,7 +102,7 @@ class FortunePlugin(
 
     def get_template_configs(self):
         return [
-            {"type": "navbar", "custom_bindings": True},
+            {"type": "navbar", "name": "Fortune", "custom_bindings": True},
         ]
 
     def on_after_startup(self):

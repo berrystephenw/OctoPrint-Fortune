@@ -21,11 +21,11 @@ $(function() {
                 url: API_BASEURL + "plugin/fortune",
                 type: "GET",
                 dataType: "json",
-                data: {
-                    command: "test",
+                data: "test", // {
+                    //command: "test",
                     /* token: self.settings.settings.plugins.OctoText.access_token(), */
-                    channel: 1
-                },
+                    //channel: 1
+                //},
                 contentType: "application/json; charset=UTF-8",
                 success: function (response) {
                     if (response.result) {
@@ -37,17 +37,15 @@ $(function() {
                     } else {
                         var text;
 
-                        text = gettext("");
+                        text = gettext("Sorry, no fortune for you today!");
 
                         new PNotify({
-                            title: gettext("Sorry, no fortune for you today!"),
+                            title: gettext("Something went wrong"),
                             text: text,
                             type: "error"
                         });
                     }
                 },
-                error: function () {
-                }
             });
         };
     }
@@ -61,6 +59,6 @@ $(function() {
         // ViewModels your plugin depends on, e.g. loginStateViewModel, settingsViewModel, ...
         dependencies: [ "navigationViewModel" /* "loginStateViewModel", "settingsViewModel" */ ],
         // Elements to bind to, e.g. #settings_plugin_fortune, #tab_plugin_fortune, ...
-        elements: [ "#navbar_plugin_fortune"  ]
+        elements: ["#navbar_plugin_fortune"]
     });
 });

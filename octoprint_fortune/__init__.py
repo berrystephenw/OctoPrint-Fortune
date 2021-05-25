@@ -70,8 +70,7 @@ class FortunePlugin(
 
     def get_random_fortune(self, fortune_file):
         """
-        Get a random fortune from the specified file. Barfs if the corresponding
-        `.dat` file isn't present.
+        Get a random fortune from the specified file.
 
         :Parameters:
             fortune_file : str
@@ -85,44 +84,15 @@ class FortunePlugin(
         return fortunes[randomRecord]
 
     def fortune(self):
-        """
-        Main program.
 
-        usage = 'Usage: %prog [OPTIONS] [fortune_file]'
-        arg_parser = OptionParser(usage=usage)
-        arg_parser.add_option('-V', '--version', action='store_true',
-                              dest='show_version', help='Show version and exit.')
-        arg_parser.epilog = 'If fortune_file is omitted, fortune looks at the ' \
-                            'FORTUNE_FILE environment variable for the path.'
-
-        options, args = arg_parser.parse_args(sys.argv)
-        if len(args) == 2:
-            fortune_file = args[1]
-
-        else:
-
-        try:
-            fortune_file = os.environ['FORTUNE_FILE']
-        except KeyError:
-            print('Missing fortune file.', file=sys.stderr)
-            sys.exit(1)
-
-        try:
-            if options.show_version:
-                print('fortune, version {}'.format(__version__))
-            else:
-        """
-        fortune_file = self._basefolder + "/fortunes/fortunes"
+        fortune_file = self._basefolder + "/fortunes"
         fortune = self.get_random_fortune(fortune_file)
-        self._logger.info(f"fortune: {fortune}")
+        # self._logger.info(f"fortune: {fortune}")
         return fortune
-        # except ValueError as msg:
-        #    print(msg, file=sys.stderr)
-        #   sys.exit(1)
 
     def on_api_get(self, request):
 
-        self._logger.debug("TEST API The test button was pressed...")
+        self._logger.debug("The fortune button was pressed...")
         self._logger.debug(f"request = {request}")
 
         your_fortune = self.fortune()

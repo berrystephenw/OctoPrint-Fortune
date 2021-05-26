@@ -102,13 +102,14 @@ class FortunePlugin(
 
     def get_template_configs(self):
         return [
-            {"type": "navbar", "name": "Fortune", "custom_bindings": True},
+            {"type": "navbar", "name": "fortune", "custom_bindings": True},
         ]
 
     def on_after_startup(self):
 
         self._logger.info("--------------------------------------------")
         self._logger.info(f"Fortune started: {self._plugin_version}")
+        self._logger.info(f"Fortune name: {self._identifier}")
         self._logger.info("--------------------------------------------")
 
     ##~~ SettingsPlugin mixin
@@ -125,9 +126,7 @@ class FortunePlugin(
     def get_assets(self):
         # Define your plugin's asset files to automatically include in the
         # core UI here.
-        return dict(
-            js=["js/fortune.js"], css=["css/fortune.css"], less=["less/fortune.less"]
-        )
+        return dict(js=["js/fortune.js"])
 
     ##~~ Softwareupdate hook
 

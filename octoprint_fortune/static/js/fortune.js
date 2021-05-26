@@ -14,7 +14,11 @@ $(document).ready(function(){
 $(function() {
     function FortuneViewModel(parameters) {
         var self = this;
-        self.settings = parameters[0];
+        self.nav = parameters[0];
+
+        self.onUserLoggedIn = function(user) {
+            self.yourFortune();
+        };
 
         self.yourFortune = function () {
             $.ajax({
@@ -57,7 +61,7 @@ $(function() {
     OCTOPRINT_VIEWMODELS.push({
         construct: FortuneViewModel,
         // ViewModels your plugin depends on, e.g. loginStateViewModel, settingsViewModel, ...
-        dependencies: [ "navigationViewModel" /* "loginStateViewModel", "settingsViewModel" */ ],
+        dependencies: ["navigationViewModel"],
         // Elements to bind to, e.g. #settings_plugin_fortune, #tab_plugin_fortune, ...
         elements: ["#navbar_plugin_fortune"]
     });

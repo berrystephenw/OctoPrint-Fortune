@@ -1,5 +1,6 @@
 """
 # Introduction
+Copyright © 2008-2012 Brian M. Clapper. All rights reserved.
 
 `fortune` is a stripped-down implementation of the classic BSD Unix
 `fortune` command. It combines the capabilities of the `strfile` command
@@ -136,7 +137,7 @@ class FortunePlugin(
         # for details.
         return dict(
             fortune=dict(
-                displayName="Fortune Plugin",
+                displayName="Fortune",
                 displayVersion=self._plugin_version,
                 # version check: github repository
                 type="github_release",

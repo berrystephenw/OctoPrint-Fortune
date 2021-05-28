@@ -97,9 +97,58 @@ class FortunePlugin(
 
         self._logger.debug(f"Your fortune: {your_fortune}")
 
+        if self._settings.get(["enable_text_fortunes"]):
+            self.send_fortune_text(your_fortune)
+
         return flask.make_response(
             flask.jsonify(result=True, error=None, data=your_fortune)
         )
+
+    def send_fortune_text(self, fortune):
+
+        self._logger.debug("TEST API The test button was pressed...")
+        self._logger.debug(f"request = {fortune}")
+
+        title = "Your Fortune!"  # text only, no special characters
+        printer_name = (
+            self._identifier  # you can use this to inform people this is coming from your plugin
+        )
+        thumbnail_filename = (
+            self._basefolder + "/static/img/Alert.png"
+        )  # path to a thumbnail image to be sent. Set to None if not used.
+        # thumbnail_filename = None
+        do_cam_snapshot = (
+            True  # True tries to send an image from the webcam if enabled in OctoText
+            # only one image is sent, either the thumbnail or webcam and the
+            # thumbnail takes precedence
+        )
+        data = dict(
+            [
+                ("title", title),
+                ("description", fortune),
+                ("sender", printer_name),
+                ("thumbnail", None),  # no image setup yet
+                ("send_image", do_cam_snapshot),
+            ]
+        )
+
+        # check to see if OctoText exists
+        p_info = self._plugin_manager.get_plugin_info("OctoText", require_enabled=True)
+        if p_info is None:
+            self._logger.debug("OctoText is not loaded or enabled on this system!")
+            error = "NOT_LOADED"
+            return flask.make_response(flask.jsonify(result=True, error=error))
+        self._logger.debug(f"OctoText version {p_info.version}")
+        self._logger.debug(f"OctoText info block: {p_info}")
+        if p_info.loaded:
+            self._logger.debug("OctoText has been loaded")
+        error = None
+        try:
+            self._plugin_manager.send_plugin_message("OctoText", {"test": data})
+        except Exception as e:
+            error = "NOT_ENABLED"
+            self._logger.debug(f"Exception sending API message: {e}")
+        return flask.make_response(flask.jsonify(result=True, error=error))
 
     def get_template_configs(self):
         return [
@@ -119,6 +168,7 @@ class FortunePlugin(
         return {
             "push_message": None,
             "show_navbar_button": True,
+            "enable_text_fortunes": False,
             # put your plugin's default settings here
         }
 

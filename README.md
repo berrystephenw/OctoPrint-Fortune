@@ -18,11 +18,12 @@ or manually using this URL:
 
     https://github.com/berrystephenw/OctoPrint-Fortune/archive/main.zip
 
+This is a Python 3 or greater plugin!
 
 ## Configuration
 
 The only configuration is to enable or disable the icon on the navigation bar, and optionally 
-to enable sending your fortune to OctoText. OctoText must be enabled and configured for
+to enable sending your fortune to OctoText. [OctoText](https://plugins.octoprint.org/plugins/OctoText/) must be enabled and configured for
 this feature to work.
 ## Copyright
 Copyright © 2008-2012 Brian M. Clapper. All rights reserved.

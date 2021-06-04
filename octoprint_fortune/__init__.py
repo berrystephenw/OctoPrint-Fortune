@@ -114,7 +114,7 @@ class FortunePlugin(
             self._identifier  # you can use this to inform people this is coming from your plugin
         )
         thumbnail_filename = (
-            self._basefolder + "/static/img/Alert.png"
+            self._basefolder + "/static/img/fortune5.jpg"
         )  # path to a thumbnail image to be sent. Set to None if not used.
         # thumbnail_filename = None
         do_cam_snapshot = (
@@ -127,7 +127,7 @@ class FortunePlugin(
                 ("title", title),
                 ("description", fortune),
                 ("sender", printer_name),
-                ("thumbnail", None),  # no image setup yet
+                ("thumbnail", thumbnail_filename),  # no image setup yet
                 ("send_image", do_cam_snapshot),
             ]
         )

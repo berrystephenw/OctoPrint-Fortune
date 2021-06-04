@@ -3,43 +3,32 @@ layout: plugin
 
 id: fortune
 title: OctoPrint-Fortune
-description: Gives you a pithy fortune on web startup
+description: Gives you a pithy fortune on web login or startup
 authors:
 - Stephen Berry
-license: AGPLv3
+license: BSD
 
-# TODO
-date: today's date in format YYYY-MM-DD, e.g. 2015-04-21
+date: 2021-06-04
 
 homepage: https://github.com/berrystephenw/OctoPrint-Fortune
 source: https://github.com/berrystephenw/OctoPrint-Fortune
 archive: https://github.com/berrystephenw/OctoPrint-Fortune/archive/main.zip
 
-# TODO
-# Set this to true if your plugin uses the dependency_links setup parameter to include
-# library versions not yet published on PyPi. SHOULD ONLY BE USED IF THERE IS NO OTHER OPTION!
-#follow_dependency_links: false
-
-# TODO
 tags:
-- a list
-- of tags
-- that apply
-- to your plugin
-- (take a look at the existing plugins for what makes sense here)
+- fortune
+- text 
+- notification
 
 # TODO
 screenshots:
-- url: url of a screenshot, /assets/img/...
-  alt: alt-text of a screenshot
-  caption: caption of a screenshot
-- url: url of another screenshot, /assets/img/...
-  alt: alt-text of another screenshot
-  caption: caption of another screenshot
-- ...
+- url: /assets/img/plugins/fortune/fortune-1.png
+  alt: Fortune message on login
+  caption: Your fortune
+- url: /assets/img/plugins/fortune/IMG_6255.png
+  alt: text fortune
+  caption: Fortune sent to OctoText
 
-# TODO
-featuredimage: url of a featured image for your plugin, /assets/img/...
+featuredimage: /assets/img/plugins/fortune/fortune-1
 
 # TODO
 # You only need the following if your plugin requires specific OctoPrint versions or
@@ -59,7 +48,7 @@ compatibility:
   # OctoPrint versions being supported.
 
   octoprint:
-  - 1.2.0
+  - 1.4.0
 
   # List of compatible operating systems
   #
@@ -94,9 +83,37 @@ compatibility:
   # is EOL), leave at ">=2.7,<3" - be aware that your plugin will not be allowed to register on the
   # plugin repository if it only support Python 2.
 
-  python: ">=2.7,<3"
+  python: ">=3,<4"
 
 ---
 
-**TODO**: Longer description of your plugin, configuration examples etc. This part will be visible on the page at
-http://plugins.octoprint.org/plugin/fortune/
+This is an adaptation of the original UNIX fortune program. Fortune will 
+run on OctoPrint login and popup a quote or saying from a database of stored quotes.
+
+I have not created these quotes or sayings, they are simply provided from the
+source given by Brian M. Clapper as a sample set of fortunes.
+
+http://software.clapper.org/fortune/
+
+There is an icon that looks like a book on the navigation bar for those that 
+would like a more frequent fortune. This can be turned off in the settings page.
+
+## Setup
+
+Install via the bundled [Plugin Manager](https://docs.octoprint.org/en/master/bundledplugins/pluginmanager.html)
+or manually using this URL:
+
+    https://github.com/berrystephenw/OctoPrint-Fortune/archive/main.zip
+
+This is a Python 3 or greater plugin!
+
+## Configuration
+
+The only configuration is to enable or disable the icon on the navigation bar, and optionally 
+to enable sending your fortune to OctoText. [OctoText](https://plugins.octoprint.org/plugins/OctoText/) must be enabled and configured for
+this feature to work.
+
+## Copyright
+
+Copyright © 2008-2012 Brian M. Clapper. All rights reserved.
+

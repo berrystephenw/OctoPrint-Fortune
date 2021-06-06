@@ -10,5 +10,12 @@
             Enable sending fortune to OctoText.
             OctoText must be loaded and configured for this feature to work.
         </label>
+        {{ _('Timeout') }}
+        <input class="input-mini" type="number" min="0" max="100" data-bind="value: settings.settings.plugins.fortune.timeout" required>
+        <span class="help-block">{% trans %}
+            Add this many seconds to the fortune popup before it disappears. Zero uses the default delay based on the
+            number of characters in the fortune.
+            {% endtrans %}
+        </span>
 	</div>
 </form>

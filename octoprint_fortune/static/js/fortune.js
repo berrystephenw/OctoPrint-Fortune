@@ -32,11 +32,21 @@ $(function() {
                 //},
                 contentType: "application/json; charset=UTF-8",
                 success: function (response) {
+                    var delayf;
+                    if (self.settings.settings.plugins.fortune.timeout() > 0){
+                        delayf = self.settings.settings.plugins.fortune.timeout() * 1000;
+                    } else {
+                        delayf = parseInt(gettext("Your Fortune!").length +
+                                gettext(response.data).length) * 55 + 100;
+                    }
                     if (response.result) {
                         new PNotify({
                             title: gettext("Your Fortune!"),
                             text: gettext(response.data),
-                            type: "success"
+                            type: "success",
+                            // adding both string lengths, parseInt in case something wonky is in response,
+                            // 55ms per letter read time, additional 100ms as reaction speed to notice the popup and move your eyes there
+                            delay: delayf
                         });
                     } else {
                         var text;

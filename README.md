@@ -22,8 +22,11 @@ This is a Python 3 or greater plugin!
 
 ## Configuration
 
-The only configuration is to enable or disable the icon on the navigation bar, and optionally 
-to enable sending your fortune to OctoText. [OctoText](https://plugins.octoprint.org/plugins/OctoText/) must be enabled and configured for
+The configuration available are:
+* to enable or disable the icon on the navigation bar 
+* optionally enable sending your fortune to OctoText. [OctoText](https://plugins.octoprint.org/plugins/OctoText/) must be enabled and configured for
 this feature to work.
+* option to use a fixed delay on the fortune popups. The default is based on
+the number of characters in the fortune.
 ## Copyright
 Copyright © 2008-2019 Brian M. Clapper. All rights reserved.

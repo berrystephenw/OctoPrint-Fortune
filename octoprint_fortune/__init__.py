@@ -169,6 +169,7 @@ class FortunePlugin(
             "push_message": None,
             "show_navbar_button": True,
             "enable_text_fortunes": False,
+            "timeout": 1,
             # put your plugin's default settings here
         }
 

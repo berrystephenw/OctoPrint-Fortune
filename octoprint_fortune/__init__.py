@@ -159,7 +159,6 @@ class FortunePlugin(
 
         self._logger.info("--------------------------------------------")
         self._logger.info(f"Fortune started: {self._plugin_version}")
-        self._logger.info(f"Fortune name: {self._identifier}")
         self._logger.info("--------------------------------------------")
 
     ##~~ SettingsPlugin mixin
@@ -169,7 +168,7 @@ class FortunePlugin(
             "push_message": None,
             "show_navbar_button": True,
             "enable_text_fortunes": False,
-            "timeout": 1,
+            "timeout": 10,
             # put your plugin's default settings here
         }
 
@@ -204,7 +203,7 @@ class FortunePlugin(
 # If you want your plugin to be registered within OctoPrint under a different name than what you defined in setup.py
 # ("OctoPrint-PluginSkeleton"), you may define that here. Same goes for the other metadata derived from setup.py that
 # can be overwritten via __plugin_xyz__ control properties. See the documentation for that.
-__plugin_name__ = "Fortune Plugin"
+__plugin_name__ = "Fortune"
 
 # Starting with OctoPrint 1.4.0 OctoPrint will also support to run under Python 3 in addition to the deprecated
 # Python 2. New plugins should make sure to run under both versions for now. Uncomment one of the following

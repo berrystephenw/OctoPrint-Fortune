@@ -25,11 +25,7 @@ $(function() {
                 url: API_BASEURL + "plugin/fortune",
                 type: "GET",
                 dataType: "json",
-                data: "test", // {
-                    //command: "test",
-                    /* token: self.settings.settings.plugins.OctoText.access_token(), */
-                    //channel: 1
-                //},
+                data: "test",
                 contentType: "application/json; charset=UTF-8",
                 success: function (response) {
                     var delayf;

@@ -83,7 +83,7 @@ class FortunePlugin(
 
     def fortune(self):
 
-        fortune_file = self._basefolder + "/fortunes"
+        fortune_file = self._basefolder + "/scooter"
         fortune = self.get_random_fortune(fortune_file)
         # self._logger.info(f"fortune: {fortune}")
         return fortune

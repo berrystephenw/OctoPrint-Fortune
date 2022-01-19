@@ -1,21 +1,40 @@
 <form class="form-horizontal">
-	<h3>Fortune settings</h3>
-	<div class="control-group">
-        <label class="checkbox">
-            <input type="checkbox" value="en_icon" data-bind="checked: settings.settings.plugins.fortune.show_navbar_button">
-            Enable navigation bar icon
-        </label>
-        <label class="checkbox">
-            <input type="checkbox" value="en_text" data-bind="checked: settings.settings.plugins.fortune.enable_text_fortunes">
-            Enable sending fortune to OctoText.
-            OctoText must be loaded and configured for this feature to work.
-        </label>
-        {{ _('Timeout') }}
-        <input class="input-mini" type="number" min="0" max="100" data-bind="value: settings.settings.plugins.fortune.timeout" required>
-        <span class="help-block">{% trans %}
-            Add this many seconds to the fortune popup before it disappears. Zero uses the default delay based on the
-            number of characters in the fortune.
-            {% endtrans %}
-        </span>
-	</div>
+    <h3>Fortune settings</h3>
+    <div class="control-group">
+        <div class="controls">
+            <label class="checkbox">
+                <input type="checkbox" value="en_icon" data-bind="checked: settings.settings.plugins.fortune.show_navbar_button"> Enable navigation bar icon
+            </label>
+            <label class="checkbox">
+                <input type="checkbox" value="en_text" data-bind="checked: settings.settings.plugins.fortune.enable_text_fortunes"> Enable sending fortune to OctoText.
+                OctoText must be loaded and configured for this feature to work.
+            </label>
+        </div>
+        <div class="controls">
+            {{ _('Timeout') }}
+            <input class="input-mini" type="number" min="0" max="100" data-bind="value: settings.settings.plugins.fortune.timeout" required>
+            <span class="add-on">sec</span>
+            <span class="help-block">{% trans %}
+                Add this many seconds to the fortune popup before it disappears. Zero uses the default delay based on the
+                number of characters in the fortune.
+                {% endtrans %}
+            </span>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Fortunes file</label>
+        <div class="controls">
+            <select data-bind="value: settings.settings.plugins.fortune.fortune_file">
+                <option value="" disabled selected>Choose...</option>
+                {% for item in plugin_fortune_availableFiles %}
+                <option value="{{ item }}">{{ item }}</option>
+                {% endfor %}
+            </select>
+            <span class="help-block">
+                {% trans %}
+                Select the type of fortunes to display.
+                {% endtrans %}
+            </span>
+        </div>
+    </div>
 </form>

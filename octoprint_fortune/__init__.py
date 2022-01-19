@@ -21,6 +21,8 @@ from email.utils import formatdate
 import flask
 import octoprint.plugin
 
+from os import listdir
+from os.path import isfile, join
 
 class FortunePlugin(
     octoprint.plugin.SimpleApiPlugin,
@@ -85,11 +87,20 @@ class FortunePlugin(
         return fortunes[randomRecord]
 
     def fortune(self):
-
-        fortune_file = self._basefolder + "/fortunes"
+        fortune_path = self._basefolder + "/fortunes"
+        fortune_file = join(fortune_path, self._settings.get(["fortune_file"]))
+        self._logger.debug("Fortune file: " + fortune_file)
         fortune = self.get_random_fortune(fortune_file)
         # self._logger.info(f"fortune: {fortune}")
         return fortune
+
+    def get_template_vars(self):
+        fortune_path = self._basefolder + "/fortunes"
+        available_files = [item for item in listdir(fortune_path) if isfile(join(fortune_path,item))]
+
+        return {
+            "availableFiles": available_files
+        }
 
     def on_api_get(self, request):
 
@@ -180,9 +191,9 @@ class FortunePlugin(
 
     def on_after_startup(self):
 
-        self._logger.info("--------------------------------------------")
-        self._logger.info(f"Fortune started: {self._plugin_version}")
-        self._logger.info("--------------------------------------------")
+        self._logger.debug("--------------------------------------------")
+        self._logger.debug(f"Fortune started: {self._plugin_version}")
+        self._logger.debug("--------------------------------------------")
 
         helpers = self._plugin_manager.get_helpers("OctoText")
         if helpers and "send_email" in helpers:
@@ -196,6 +207,7 @@ class FortunePlugin(
             "show_navbar_button": True,
             "enable_text_fortunes": False,
             "timeout": 10,
+            "fortune_file": "fortunes",
             # put your plugin's default settings here
         }
 

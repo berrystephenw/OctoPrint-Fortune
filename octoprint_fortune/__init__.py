@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 # Introduction
 Copyright © 2008-2012 Brian M. Clapper. All rights reserved.
@@ -14,6 +15,8 @@ text file format.
 import codecs
 import random
 import re
+from email.message import EmailMessage
+from email.utils import formatdate
 
 import flask
 import octoprint.plugin
@@ -108,30 +111,6 @@ class FortunePlugin(
 
         self._logger.debug("TEST API The test button was pressed...")
         self._logger.debug(f"request = {fortune}")
-
-        title = "Your Fortune!"  # text only, no special characters
-        printer_name = (
-            self._identifier  # you can use this to inform people this is coming from your plugin
-        )
-        thumbnail_filename = (
-            self._basefolder + "/static/img/fortune5.jpg"
-        )  # path to a thumbnail image to be sent. Set to None if not used.
-        # thumbnail_filename = None
-        do_cam_snapshot = (
-            True  # True tries to send an image from the webcam if enabled in OctoText
-            # only one image is sent, either the thumbnail or webcam and the
-            # thumbnail takes precedence
-        )
-        data = dict(
-            [
-                ("title", title),
-                ("description", fortune),
-                ("sender", printer_name),
-                ("thumbnail", thumbnail_filename),  # no image setup yet
-                ("send_image", do_cam_snapshot),
-            ]
-        )
-
         # check to see if OctoText exists
         p_info = self._plugin_manager.get_plugin_info("OctoText", require_enabled=True)
         if p_info is None:
@@ -142,12 +121,56 @@ class FortunePlugin(
         self._logger.debug(f"OctoText info block: {p_info}")
         if p_info.loaded:
             self._logger.debug("OctoText has been loaded")
-        error = None
-        try:
-            self._plugin_manager.send_plugin_message("OctoText", {"test": data})
-        except Exception as e:
-            error = "NOT_ENABLED"
-            self._logger.debug(f"Exception sending API message: {e}")
+
+        p = re.compile("0.3.[01]*")  # looking for the older OctoText API
+        ver = p_info.version
+        n = p.match(ver)
+
+        title = "Your Fortune!"  # text only, no special characters
+        printer_name = (
+            self._identifier  # you can use this to inform people this is coming from your plugin
+        )
+        thumbnail_filename = self._basefolder + "/static/img/fortune5.jpg"
+        if n.end() > 4:
+            do_cam_snapshot = (
+                True  # True tries to send an image from the webcam if enabled in OctoText
+                # only one image is sent, either the thumbnail or webcam and the
+                # thumbnail takes precedence
+            )
+            data = dict(
+                [
+                    ("title", title),
+                    ("description", fortune),
+                    ("sender", printer_name),
+                    ("thumbnail", thumbnail_filename),  # no image setup yet
+                    ("send_image", do_cam_snapshot),
+                ]
+            )
+            error = None
+            try:
+                self._plugin_manager.send_plugin_message("OctoText", {"test": data})
+            except Exception as e:
+                error = "NOT_ENABLED"
+                self._logger.debug(f"Exception sending API message: {e}")
+        else:
+            # newer OctoText so we format an email message
+            self._logger.debug("Sending emailMessage to OctoText")
+            emailMessage = EmailMessage()
+            emailMessage["Subject"] = title
+            emailMessage["Date"] = formatdate(localtime=True)
+            emailMessage.set_content(fortune, charset="utf-8")
+
+            fp = open(thumbnail_filename, "rb")
+            emailMessage.add_attachment(
+                fp.read(),
+                maintype="image",
+                subtype="jpg",
+                filename=thumbnail_filename,
+            )
+
+            # send the email using OctoText
+            error = self.send_email(command="OctoText", data=emailMessage)
+
         return flask.make_response(flask.jsonify(result=True, error=error))
 
     def get_template_configs(self):
@@ -160,6 +183,10 @@ class FortunePlugin(
         self._logger.info("--------------------------------------------")
         self._logger.info(f"Fortune started: {self._plugin_version}")
         self._logger.info("--------------------------------------------")
+
+        helpers = self._plugin_manager.get_helpers("OctoText")
+        if helpers and "send_email" in helpers:
+            self.send_email = helpers["send_email"]
 
     ##~~ SettingsPlugin mixin
 

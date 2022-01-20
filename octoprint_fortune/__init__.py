@@ -17,12 +17,12 @@ import random
 import re
 from email.message import EmailMessage
 from email.utils import formatdate
+from os import listdir
+from os.path import isfile, join
 
 import flask
 import octoprint.plugin
 
-from os import listdir
-from os.path import isfile, join
 
 class FortunePlugin(
     octoprint.plugin.SimpleApiPlugin,
@@ -96,11 +96,11 @@ class FortunePlugin(
 
     def get_template_vars(self):
         fortune_path = self._basefolder + "/fortunes"
-        available_files = [item for item in listdir(fortune_path) if isfile(join(fortune_path,item))]
+        available_files = [
+            item for item in listdir(fortune_path) if isfile(join(fortune_path, item))
+        ]
 
-        return {
-            "availableFiles": available_files
-        }
+        return {"availableFiles": available_files}
 
     def on_api_get(self, request):
 

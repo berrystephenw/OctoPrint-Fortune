@@ -224,19 +224,31 @@ class FortunePlugin(
         # Define the configuration for your plugin to use with the Software Update
         # Plugin here. See https://docs.octoprint.org/en/master/bundledplugins/softwareupdate.html
         # for details.
-        return dict(
-            fortune=dict(
-                displayName="Fortune",
-                displayVersion=self._plugin_version,
+        return {
+            "Fortune": {
+                "displayName": "Fortune",
+                "displayVersion": self._plugin_version,
                 # version check: github repository
-                type="github_release",
-                user="berrystephenw",
-                repo="OctoPrint-Fortune",
-                current=self._plugin_version,
+                "type": "github_release",
+                "user": "berrystephenw",
+                "repo": "OctoPrint-Fortune",
+                "current": self._plugin_version,
+                "stable_branch": {
+                    "name": "Stable",
+                    "branch": "main",
+                    "comittish": ["main"],
+                },
+                "prerelease_branches": [
+                    {
+                        "name": "Release Candidate",
+                        "branch": "rc",
+                        "comittish": ["rc", "main"],
+                    }
+                ],
                 # update method: pip
-                pip="https://github.com/berrystephenw/OctoPrint-Fortune/archive/{target_version}.zip",
-            )
-        )
+                "pip": "https://github.com/berrystephenw/OctoPrint-Fortune/archive/{target_version}.zip",
+            }
+        }
 
 
 # If you want your plugin to be registered within OctoPrint under a different name than what you defined in setup.py

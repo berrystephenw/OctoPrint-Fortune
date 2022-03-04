@@ -26,7 +26,20 @@ The configuration available are:
 * to enable or disable the icon on the navigation bar 
 * optionally enable sending your fortune to OctoText. [OctoText](https://plugins.octoprint.org/plugins/OctoText/) must be enabled and configured for
 this feature to work.
+![Text](octoprint_fortune/assets/img/fortune-text.png)
 * option to use a fixed delay on the fortune popups. The default is based on
 the number of characters in the fortune.
+* select the fortune file out of the following list:
+  * authors
+  * Chuck Norris facts (chuckfacts)
+  * Ferengi Rules of Acquisition (it's a Star Trek thing)
+  * fortunes (the original)
+  * Jung
+  * Paine (Thomas)
+  * Scooter (not my idea)
+  * showerthoughts
+
+![Settings](octoprint_fortune/assets/img/fortune-settings.png)
+<img width="480" alt="Fortune" src="octoprint_fortune/assets/img/fortune-settings.png">
 ## Copyright
 Copyright © 2008-2019 Brian M. Clapper. All rights reserved.
